@@ -81,16 +81,19 @@ def insert_in_db (conn: sqlite3.Connection, table_name: str, values: List[str]) 
     """
     cur = conn.cursor()
 
-    request = "INSERT INTO " + table_name + " VALUES ('" + "', ".join(values) + ")"
+    request = "INSERT INTO " + table_name + " VALUES ("
+    for i in range (len(values)) :
 
-    print()
-    cli.display_success(request)
+        if (i < len(values)-1) :
+            request += "'" + values[i] + "', "
+        else :
+            request += "'" + values[i] + "')"
 
     # Execute request and display it on success
     cur.execute(request)
     print()
-    cli.display_success(request)
     conn.commit()
+    cli.display_success(request)
 
 
 def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
@@ -103,6 +106,8 @@ def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
     # Get columns name of table
     headers = tables.columns_name(conn, table_name)
 
+    all_requests = ''
+
     # Do a request for each row
     for row in rows :
 
@@ -113,14 +118,15 @@ def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
             request += "\'" + str(row[i]) + "\'"
             if (i < len(headers)-1) :
                 request += " AND "
-        request += ")"
+        request += ");"
 
         # Execute request and display it on success
+        all_requests += request + "\n"
         cur.execute(request)
-        cli.display_success(request)
 
     # Apply changes
     conn.commit()
+    cli.display_success(request)
 
 
 def update_row (conn: sqlite3.Connection, table_name: str, row: List[List], value: str) :
@@ -147,5 +153,5 @@ def update_row (conn: sqlite3.Connection, table_name: str, row: List[List], valu
     # Execute request and display it on success
     cur.execute(request)
     print()
-    cli.display_success(request)
     conn.commit()
+    cli.display_success(request)
