@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 
 import inquirer
+import os
 # import re
 
 from utils import db
 from utils import cli
+from utils import tables
 
 
 def main():
@@ -15,7 +17,7 @@ def main():
     conn = db.creer_connexion(db_file)
 
     # Remplir la BD
-    print("1. On crée la bd et on l'initialise avec des premières valeurs.")
+    # print("1. On crée la bd et on l'initialise avec des premières valeurs.")
     db.mise_a_jour_bd(conn, "data/voile_creation.sql")
     db.mise_a_jour_bd(conn, "data/voile_inserts_ok.sql")
 
@@ -52,9 +54,14 @@ def main():
             user_choice = cli.selection_menu(inquirer.List(
                     "choice",
                     message="Select a table",
-                    choices=["Missions", "Clients", "Employes", "Diplomes", "Certifications", "TypesMissions"],
+                    choices=[table for table in tables.tables_name(conn)],
                 ))
             db.display_table(conn, user_choice)
+
+        # Ask a user input before clearing screen and loop
+        print("\n\nPress ENTER to continue...")
+        input()
+        os.system('clear')
 
 
 if __name__ == "__main__":

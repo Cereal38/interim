@@ -1,6 +1,8 @@
 import sqlite3
 import tabulate
 
+from utils import tables
+
 
 def creer_connexion(db_file):
     """Crée une connexion a la base de données SQLite spécifiée par db_file
@@ -59,7 +61,5 @@ def display_table(conn, table_name):
 
     rows = cur.fetchall()
 
-    header = ["Nom", "Nombre"]
-
-    print(tabulate.tabulate(rows, header, tablefmt='grid'))
+    print(tabulate.tabulate(rows, tables.columns_name(conn, table_name), tablefmt='grid'))
 
