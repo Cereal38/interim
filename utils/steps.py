@@ -1,12 +1,15 @@
 
 import inquirer
+import re
 
 from utils import cli
+from utils import tables
+from utils import db
 
 
 def display (conn) :
     """
-    Dislay a table or a column
+    Dislay a table or a column (depend on user choices)
     """
 
     # User select a table
@@ -26,4 +29,19 @@ def display (conn) :
         # User select a column
         column_name = cli.select_column(conn, table_name)
         cli.display_column(conn, table_name, column_name)
+
+def insert (conn) :
+    """
+    Ask the user to insert a row in the table of his choice
+    """
+
+    # User select a table
+    table_name = cli.select_table(conn)
+
+    # Ask the user to fill all fields
+    values = inquirer.prompt([
+                                  inquirer.Text(column, message=f"Fill {column}" )
+                                  for column in tables.columns_name(conn, table_name)
+                              ])
+    db.insert_in_db (conn, table_name, [values[key] for key in values.keys()])
 

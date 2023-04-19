@@ -51,3 +51,16 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     conn.commit()
 
 
+def insert_in_db (conn, table_name, values) :
+    """
+    INSERT one row in db
+
+    ARGS :
+        - table_name : String
+        - values     : String list
+    """
+    cur = conn.cursor()
+
+    request = "INSERT INTO " + table_name + " VALUES ('" + "', ".join(values) + ")"
+
+    cur.execute(request)

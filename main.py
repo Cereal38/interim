@@ -2,7 +2,6 @@
 
 import inquirer
 import os
-# import re
 
 from utils import db
 from utils import cli
@@ -41,9 +40,11 @@ def main():
             return
 
 
-        # If user want to display a table, ask for which one
         if (user_choice == "DISPLAY") :
             steps.display(conn)
+
+        if (user_choice == "INSERT") :
+            steps.insert(conn)
 
 
         # Ask a user input before looping
@@ -59,13 +60,4 @@ if __name__ == "__main__":
 #         message="What do you want to do ?",
 #         choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
 #     ))
-
-# questions = [
-#   inquirer.Text('name', message="What's your name"),
-#   inquirer.Text('surname', message="What's your surname"),
-#   inquirer.Text('phone', message="What's your phone number",
-#                 validate=lambda _, x: re.match('\+?\d[\d ]+\d', x),
-#                 )
-# ]
-# answers = inquirer.prompt(questions)
 
