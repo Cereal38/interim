@@ -31,24 +31,11 @@ def main():
                 choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
             ))
 
-        # user_choice = cli.selection_menu(inquirer.Checkbox(
-        #         "choice",
-        #         message="What do you want to do ?",
-        #         choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
-        #     ))
-
-        # questions = [
-        #   inquirer.Text('name', message="What's your name"),
-        #   inquirer.Text('surname', message="What's your surname"),
-        #   inquirer.Text('phone', message="What's your phone number",
-        #                 validate=lambda _, x: re.match('\+?\d[\d ]+\d', x),
-        #                 )
-        # ]
-        # answers = inquirer.prompt(questions)
 
         if (user_choice == "EXIT") :
             print("Thank for using our program !")
             return
+
 
         # If user want to display a table, ask for which one
         if (user_choice == "DISPLAY") :
@@ -67,3 +54,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# user_choice = cli.selection_menu(inquirer.Checkbox(
+#         "choice",
+#         message="What do you want to do ?",
+#         choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
+#     ))
+
+# questions = [
+#   inquirer.Text('name', message="What's your name"),
+#   inquirer.Text('surname', message="What's your surname"),
+#   inquirer.Text('phone', message="What's your phone number",
+#                 validate=lambda _, x: re.match('\+?\d[\d ]+\d', x),
+#                 )
+# ]
+# answers = inquirer.prompt(questions)
+
