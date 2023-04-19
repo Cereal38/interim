@@ -28,6 +28,12 @@ def main():
                 choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
             ))
 
+        # user_choice = cli.selection_menu(inquirer.Checkbox(
+        #         "choice",
+        #         message="What do you want to do ?",
+        #         choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
+        #     ))
+
         # questions = [
         #   inquirer.Text('name', message="What's your name"),
         #   inquirer.Text('surname', message="What's your surname"),
