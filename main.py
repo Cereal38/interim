@@ -1,24 +1,9 @@
 #!/usr/bin/python3
 
+import inquirer
+
 from utils import db
-
-
-def select_tous_les_bateaux(conn):
-    """
-    Affiche la liste de tous les bateaux.
-
-    :param conn: Connexion à la base de données
-    """
-    cur = conn.cursor()
-    cur.execute("""
-                SELECT * 
-                FROM Bateaux
-                """)
-
-    rows = cur.fetchall()
-
-    for row in rows:
-        print(row)
+from utils import cli
 
 
 def main():
@@ -33,9 +18,21 @@ def main():
     db.mise_a_jour_bd(conn, "data/voile_creation.sql")
     db.mise_a_jour_bd(conn, "data/voile_inserts_ok.sql")
 
-    # Lire la BD
-    print("2. Liste de tous les bateaux")
-    select_tous_les_bateaux(conn)
+    # Ask the user for the action he wants
+    user_choice = cli.selection_menu(inquirer.List(
+            "choice",
+            message="What do you want to do ?",
+            choices=["DISPLAY", "INSERT", "DELETE", "UPDATE"],
+        ))
+
+    # If user want to display a table, ask for which one
+    if (user_choice == "DISPLAY") :
+        user_choice = cli.selection_menu(inquirer.List(
+                "choice",
+                message="Select a table",
+                choices=["Missions", "Clients", "Employes", "Diplomes", "Certifications", "TypesMissions"],
+            ))
+        db.display_table(conn, user_choice)
 
 
 if __name__ == "__main__":

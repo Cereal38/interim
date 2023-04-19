@@ -1,4 +1,5 @@
 import sqlite3
+import tabulate
 
 
 def creer_connexion(db_file):
@@ -46,3 +47,19 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
 
     # Validation des modifications
     conn.commit()
+
+
+def display_table(conn, table_name):
+    """
+    Display all items of the asked table
+    """
+    cur = conn.cursor()
+
+    cur.execute(f"SELECT * FROM {table_name}")
+
+    rows = cur.fetchall()
+
+    header = ["Nom", "Nombre"]
+
+    print(tabulate.tabulate(rows, header, tablefmt='grid'))
+
