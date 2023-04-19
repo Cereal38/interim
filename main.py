@@ -10,16 +10,17 @@ from utils import tables
 
 
 def main():
+
     # Nom de la BD à créer
-    db_file = "data/voile.db"
+    db_file = "data/interim.db"
 
     # Créer une connexion a la BD
     conn = db.creer_connexion(db_file)
 
     # Remplir la BD
     # print("1. On crée la bd et on l'initialise avec des premières valeurs.")
-    db.mise_a_jour_bd(conn, "data/voile_creation.sql")
-    db.mise_a_jour_bd(conn, "data/voile_inserts_ok.sql")
+    db.mise_a_jour_bd(conn, "data/creation.sql")
+    db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
     while (True) :
 
