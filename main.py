@@ -18,21 +18,27 @@ def main():
     db.mise_a_jour_bd(conn, "data/voile_creation.sql")
     db.mise_a_jour_bd(conn, "data/voile_inserts_ok.sql")
 
-    # Ask the user for the action he wants
-    user_choice = cli.selection_menu(inquirer.List(
-            "choice",
-            message="What do you want to do ?",
-            choices=["DISPLAY", "INSERT", "DELETE", "UPDATE"],
-        ))
+    while (True) :
 
-    # If user want to display a table, ask for which one
-    if (user_choice == "DISPLAY") :
+        # Ask the user for the action he wants
         user_choice = cli.selection_menu(inquirer.List(
                 "choice",
-                message="Select a table",
-                choices=["Missions", "Clients", "Employes", "Diplomes", "Certifications", "TypesMissions"],
+                message="What do you want to do ?",
+                choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
             ))
-        db.display_table(conn, user_choice)
+
+        if (user_choice == "EXIT") :
+            print("Thank for using our program !")
+            return
+
+        # If user want to display a table, ask for which one
+        if (user_choice == "DISPLAY") :
+            user_choice = cli.selection_menu(inquirer.List(
+                    "choice",
+                    message="Select a table",
+                    choices=["Missions", "Clients", "Employes", "Diplomes", "Certifications", "TypesMissions"],
+                ))
+            db.display_table(conn, user_choice)
 
 
 if __name__ == "__main__":
