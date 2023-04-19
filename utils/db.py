@@ -1,7 +1,9 @@
+
 import sqlite3
-import tabulate
+from typing import List
 
 from utils import tables
+from utils import cli
 
 
 def creer_connexion(db_file):
@@ -51,27 +53,99 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     conn.commit()
 
 
-def display_table(conn, table_name):
+def db_is_empty (conn: sqlite3.Connection) :
     """
-    Display all items of the asked table
+    Return True if db is empty
+    """
+
+    try:
+        cursor = conn.cursor()
+
+        # Count number of objects in DB
+        cursor.execute("SELECT COUNT(*) FROM sqlite_master")
+        count = cursor.fetchone()[0]
+
+        if (count == 0) :
+            return True
+        else :
+            return False
+
+    except sqlite3.Error as e:
+        print(e)
+        return False
+
+
+def insert_in_db (conn: sqlite3.Connection, table_name: str, values: List[str]) :
+    """
+    INSERT one row in DB
     """
     cur = conn.cursor()
 
-    cur.execute(f"SELECT * FROM {table_name}")
+    request = "INSERT INTO " + table_name + " VALUES ('" + "', ".join(values) + ")"
 
-    rows = cur.fetchall()
+    print()
+    cli.display_success(request)
 
-    print(tabulate.tabulate(rows, tables.columns_name(conn, table_name), tablefmt='grid'))
+    # Execute request and display it on success
+    cur.execute(request)
+    print()
+    cli.display_success(request)
+    conn.commit()
 
-def display_column(conn, table_name, column_name):
+
+def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
     """
-    Display all items of the asked column
+    DELETE rows in DB
     """
+
     cur = conn.cursor()
 
-    cur.execute(f"SELECT {column_name} FROM {table_name}")
+    # Get columns name of table
+    headers = tables.columns_name(conn, table_name)
 
-    rows = cur.fetchall()
+    # Do a request for each row
+    for row in rows :
 
-    print(tabulate.tabulate(rows, [column_name], tablefmt='grid'))
+        # Build the request
+        request = "DELETE FROM " + table_name + " WHERE ("
+        for i in range (len(row)) :
+            request += headers[i] + " = "
+            request += "\'" + str(row[i]) + "\'"
+            if (i < len(headers)-1) :
+                request += " AND "
+        request += ")"
 
+        # Execute request and display it on success
+        cur.execute(request)
+        cli.display_success(request)
+
+    # Apply changes
+    conn.commit()
+
+
+def update_row (conn: sqlite3.Connection, table_name: str, row: List[List], value: str) :
+    """
+    UDPATE a row in DB
+    """
+
+    cur = conn.cursor()
+
+    # Get columns name of table
+    headers = tables.columns_name(conn, table_name)
+
+    # Build the request
+    request = "UPDATE " + table_name
+    request += " SET " + list(value.keys())[0] + " = \'" + str(value[list(value.keys())[0]]) + "\'"
+    request += " WHERE ("
+    for i in range (len(row)) :
+        request += headers[i] + " = "
+        request += "\"" + str(row[i]) + "\""
+        if (i < len(headers)-1) :
+            request += " AND "
+    request += ")"
+
+    # Execute request and display it on success
+    cur.execute(request)
+    print()
+    cli.display_success(request)
+    conn.commit()
