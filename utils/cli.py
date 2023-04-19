@@ -1,6 +1,7 @@
 
 import inquirer
 import tabulate
+import sqlite3
 
 from utils import tables
 
@@ -41,6 +42,20 @@ def select_column (conn, table_name) :
             message="Choose a column",
             choices=tables.columns_name(conn, table_name),
         ))
+
+
+def ask_confirmation (conn: sqlite3.Connection, message: str) :
+    """
+    Ask the user to confirm
+    Return True if confirm
+    """
+    choice = selection_menu(inquirer.List(
+            "choice",
+            message=message,
+            choices=["YES", "NO"],
+        ))
+
+    return choice == "YES"
 
 
 def display_table(conn, table_name):

@@ -48,9 +48,13 @@ def main():
         if (user_choice == "INSERT") :
             steps.insert(conn)
 
+        
+        if (user_choice == "RESET") :
+            steps.reset(conn)
+
 
         # Ask a user input before looping
-        print("\n\nPress ENTER to continue...")
+        print("\nPress ENTER to continue...")
         input()
 
 

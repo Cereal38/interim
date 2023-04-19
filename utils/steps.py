@@ -30,6 +30,7 @@ def display (conn) :
         column_name = cli.select_column(conn, table_name)
         cli.display_column(conn, table_name, column_name)
 
+
 def insert (conn) :
     """
     Ask the user to insert a row in the table of his choice
@@ -44,4 +45,13 @@ def insert (conn) :
                                   for column in tables.columns_name(conn, table_name)
                               ])
     db.insert_in_db (conn, table_name, [values[key] for key in values.keys()])
+
+
+def reset (conn) :
+    """
+    Ask the user for a confirmation before reseting DB
+    """
+    if (cli.ask_confirmation(conn, "Are you sure to reset the database ?")) :
+        db.mise_a_jour_bd(conn, "data/creation.sql")
+        db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
