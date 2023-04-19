@@ -35,25 +35,29 @@ def main():
             ))
 
 
-        if (user_choice == "EXIT") :
-            print("Thank you for using our program !")
-            conn.close()
-            return
+        try :
+            if (user_choice == "EXIT") :
+                print("Thank you for using our program !")
+                conn.close()
+                return
 
 
-        if (user_choice == "DISPLAY") :
-            steps.display(conn)
+            if (user_choice == "DISPLAY") :
+                steps.display(conn)
 
 
-        if (user_choice == "INSERT") :
-            steps.insert(conn)
+            if (user_choice == "INSERT") :
+                steps.insert(conn)
 
-        
-        if (user_choice == "RESET") :
-            steps.reset(conn)
+            
+            if (user_choice == "RESET") :
+                steps.reset(conn)
 
-        if (user_choice == "FREE") :
-            steps.free(conn)
+            if (user_choice == "FREE") :
+                steps.free(conn)
+
+        except:
+            print("\n\033[93m/!\\ AN ERROR OCCURED /!\\\033[0m""")
 
 
         # Ask a user input before looping
