@@ -83,3 +83,6 @@ def insert_in_db (conn: sqlite3.Connection, table_name: str, values: List[str]) 
     request = "INSERT INTO " + table_name + " VALUES ('" + "', ".join(values) + ")"
 
     cur.execute(request)
+
+    # Apply changes
+    conn.commit()

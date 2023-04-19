@@ -13,8 +13,7 @@ def main():
 
     # Nom de la BD
     db_file = "data/interim.db"
-
-    # Créé une connexion a la BD
+# Créé une connexion a la BD
     conn = db.creer_connexion(db_file)
 
     # If DB is empty, init it
@@ -38,6 +37,7 @@ def main():
 
         if (user_choice == "EXIT") :
             print("Thank you for using our program !")
+            conn.close()
             return
 
 
