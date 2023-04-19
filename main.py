@@ -36,28 +36,35 @@ def main():
 
 
         try :
+            if (user_choice == "DISPLAY") :
+                steps.display(conn)
+
+
+            if (user_choice == "FREE") :
+                steps.free(conn)
+
+
+            if (user_choice == "INSERT") :
+                steps.insert(conn)
+
+
+            if (user_choice == "DELETE") :
+                steps.delete(conn)
+
+            
+            if (user_choice == "RESET") :
+                steps.reset(conn)
+
+
             if (user_choice == "EXIT") :
                 print("Thank you for using our program !")
                 conn.close()
                 return
 
 
-            if (user_choice == "DISPLAY") :
-                steps.display(conn)
-
-
-            if (user_choice == "INSERT") :
-                steps.insert(conn)
-
-            
-            if (user_choice == "RESET") :
-                steps.reset(conn)
-
-            if (user_choice == "FREE") :
-                steps.free(conn)
-
-        except:
-            print("\n\033[93m/!\\ AN ERROR OCCURED /!\\\033[0m""")
+        except Exception as e:
+            cli.display_error('AN ERROR OCCURED')
+            cli.display_error(e)
 
 
         # Ask a user input before looping
@@ -67,10 +74,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# user_choice = cli.selection_menu(inquirer.Checkbox(
-#         "choice",
-#         message="What do you want to do ?",
-#         choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
-#     ))
 

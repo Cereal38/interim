@@ -30,6 +30,26 @@ def display (conn) :
         column_name = cli.select_column(conn, table_name)
         cli.display_column(conn, table_name, column_name)
 
+        
+def free (conn) :
+    """
+    Allow the user to write the command of his choice in an editor
+    """
+    text = inquirer.prompt([inquirer.Editor('text', message="Write the command in your editor")])
+
+    # Remove \n
+    request = text['text'].strip()
+
+    # Execute request
+    cur = conn.cursor()
+    cur.execute(request)
+
+    print()
+    cli.display_success(request)
+
+    # Apply changes
+    conn.commit()
+
 
 def insert (conn) :
     """
@@ -47,6 +67,28 @@ def insert (conn) :
     db.insert_in_db (conn, table_name, [values[key] for key in values.keys()])
 
 
+def delete (conn) :
+    """
+    Allow user to delete rows from a table
+    """
+
+    # User select a table
+    table_name = cli.select_table(conn)
+
+    # Get all rows
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM {table_name}")
+    rows = cur.fetchall()
+
+    user_choices = cli.selection_menu(inquirer.Checkbox(
+            "choice",
+            message="Choose rows to delete",
+            choices=[[col for col in row] for row in rows],
+        ))
+
+    db.delete_rows(conn, table_name, user_choices)
+
+
 def reset (conn) :
     """
     Ask the user for a confirmation before reseting DB
@@ -56,18 +98,3 @@ def reset (conn) :
         db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
 
-def free (conn) :
-    """
-    Allow the user to write the command of his choice in an editor
-    """
-    text = inquirer.prompt([inquirer.Editor('text', message="Write the command in your editor")])
-
-    # Remove \n
-    request = text['text'].strip()
-
-    # Execute request
-    cur = conn.cursor()
-    cur.execute(request)
-
-    # Apply changes
-    conn.commit()

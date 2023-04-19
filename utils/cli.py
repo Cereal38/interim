@@ -58,7 +58,7 @@ def ask_confirmation (conn: sqlite3.Connection, message: str) :
     return choice == "YES"
 
 
-def display_table(conn, table_name):
+def display_table (conn: sqlite3.Connection, table_name: str):
     """
     Display all items of the asked table
     """
@@ -71,7 +71,7 @@ def display_table(conn, table_name):
     print(tabulate.tabulate(rows, tables.columns_name(conn, table_name), tablefmt='grid'))
 
 
-def display_column(conn, table_name, column_name):
+def display_column (conn: sqlite3.Connection, table_name: str, column_name: str):
     """
     Display all items of the asked column
     """
@@ -83,3 +83,16 @@ def display_column(conn, table_name, column_name):
 
     print(tabulate.tabulate(rows, [column_name], tablefmt='grid'))
 
+
+def display_success (text: str) :
+    """
+    Display a text in a green color
+    """
+    print(f"    \033[92m✓ {text}\033[0m""")
+
+
+def display_error (text: str) :
+    """
+    Display a text in a red color
+    """
+    print(f"    \033[91mX {text}\033[0m""")

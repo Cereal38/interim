@@ -3,6 +3,7 @@ import sqlite3
 from typing import List
 
 from utils import tables
+from utils import cli
 
 
 def creer_connexion(db_file):
@@ -76,13 +77,45 @@ def db_is_empty (conn: sqlite3.Connection) :
 
 def insert_in_db (conn: sqlite3.Connection, table_name: str, values: List[str]) :
     """
-    INSERT one row in db
+    INSERT one row in DB
     """
     cur = conn.cursor()
 
     request = "INSERT INTO " + table_name + " VALUES ('" + "', ".join(values) + ")"
 
+    print()
+    cli.display_success(request)
+
+    # Apply changes
     cur.execute(request)
+    conn.commit()
+
+
+def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
+    """
+    DELETE rows in DB
+    """
+
+    cur = conn.cursor()
+
+    # Get columns name of table
+    headers = tables.columns_name(conn, table_name)
+
+    # Do a request for each row
+    for row in rows :
+
+        # Build the request
+        request = "DELETE FROM " + table_name + " WHERE ("
+        for i in range (len(row)) :
+            request += headers[i] + " = "
+            request += "\"" + str(row[i]) + "\""
+            if (i < len(headers)-1) :
+                request += " AND "
+        request += ")"
+
+        # Display the request and execute it
+        cli.display_success(request)
+        cur.execute(request)
 
     # Apply changes
     conn.commit()

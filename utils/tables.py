@@ -4,7 +4,7 @@ Contains informations about tables in the db
 
 import sqlite3
 
-def tables_name (conn) :
+def tables_name (conn: sqlite3.Connection) :
 
     # Connect to the database
     cursor = conn.cursor()
@@ -15,7 +15,7 @@ def tables_name (conn) :
 
     return tables
 
-def columns_name (conn, table_name) :
+def columns_name (conn: sqlite3.Connection, table_name: str) :
 
     # Connect to the database
     cursor = conn.cursor()
