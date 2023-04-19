@@ -1,5 +1,6 @@
 
 import sqlite3
+from typing import List
 
 from utils import tables
 
@@ -51,13 +52,31 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     conn.commit()
 
 
-def insert_in_db (conn, table_name, values) :
+def db_is_empty (conn: sqlite3.Connection) :
+    """
+    Return True if db is empty
+    """
+
+    try:
+        cursor = conn.cursor()
+
+        # Count number of objects in DB
+        cursor.execute("SELECT COUNT(*) FROM sqlite_master")
+        count = cursor.fetchone()[0]
+
+        if (count == 0) :
+            return True
+        else :
+            return False
+
+    except sqlite3.Error as e:
+        print(e)
+        return False
+
+
+def insert_in_db (conn: sqlite3.Connection, table_name: str, values: List[str]) :
     """
     INSERT one row in db
-
-    ARGS :
-        - table_name : String
-        - values     : String list
     """
     cur = conn.cursor()
 

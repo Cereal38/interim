@@ -11,16 +11,17 @@ from utils import steps
 
 def main():
 
-    # Nom de la BD à créer
+    # Nom de la BD
     db_file = "data/interim.db"
 
-    # Créer une connexion a la BD
+    # Créé une connexion a la BD
     conn = db.creer_connexion(db_file)
 
-    # Remplir la BD
-    # print("1. On crée la bd et on l'initialise avec des premières valeurs.")
-    db.mise_a_jour_bd(conn, "data/creation.sql")
-    db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
+    # If DB is empty, init it
+    if (db.db_is_empty(conn)) :
+
+        db.mise_a_jour_bd(conn, "data/creation.sql")
+        db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
     while (True) :
 
@@ -30,8 +31,8 @@ def main():
         # Ask the user for the action he wants
         user_choice = cli.selection_menu(inquirer.List(
                 "choice",
-                message="What do you want to do ?",
-                choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "EXIT"],
+                message="Choose an action",
+                choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "RESET", "EXIT"],
             ))
 
 
@@ -42,6 +43,7 @@ def main():
 
         if (user_choice == "DISPLAY") :
             steps.display(conn)
+
 
         if (user_choice == "INSERT") :
             steps.insert(conn)
