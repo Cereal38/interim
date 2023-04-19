@@ -86,8 +86,10 @@ def insert_in_db (conn: sqlite3.Connection, table_name: str, values: List[str]) 
     print()
     cli.display_success(request)
 
-    # Apply changes
+    # Execute request and display it on success
     cur.execute(request)
+    print()
+    cli.display_success(request)
     conn.commit()
 
 
@@ -113,9 +115,9 @@ def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
                 request += " AND "
         request += ")"
 
-        # Display the request and execute it
-        cli.display_success(request)
+        # Execute request and display it on success
         cur.execute(request)
+        cli.display_success(request)
 
     # Apply changes
     conn.commit()
@@ -128,11 +130,6 @@ def update_row (conn: sqlite3.Connection, table_name: str, row: List[List], valu
 
     cur = conn.cursor()
 
-    print(table_name)
-    print(row)
-    print(value)
-    print(list(value.keys()))
-    
     # Get columns name of table
     headers = tables.columns_name(conn, table_name)
 
@@ -147,8 +144,8 @@ def update_row (conn: sqlite3.Connection, table_name: str, row: List[List], valu
             request += " AND "
     request += ")"
 
-    # Display the request and execute it
+    # Execute request and display it on success
+    cur.execute(request)
     print()
     cli.display_success(request)
-    cur.execute(request)
     conn.commit()
