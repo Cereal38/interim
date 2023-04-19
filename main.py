@@ -39,12 +39,30 @@ def main():
 
         # If user want to display a table, ask for which one
         if (user_choice == "DISPLAY") :
-            user_choice = cli.selection_menu(inquirer.List(
+            table_name = cli.selection_menu(inquirer.List(
                     "choice",
                     message="Select a table",
                     choices=[table for table in tables.tables_name(conn)],
                 ))
-            db.display_table(conn, user_choice)
+
+            # Ask the user if he wants to display the table or a column
+            user_choice = cli.selection_menu(inquirer.List(
+                    "choice",
+                    message="Do you want to display the full table or only a column ?",
+                    choices=["FULL TABLE", "ONLY A COLUMN"],
+                ))
+
+            if (user_choice == "FULL TABLE") :
+                db.display_table(conn, table_name)
+
+            if (user_choice == "ONLY A COLUMN") :
+                column_name = cli.selection_menu(inquirer.List(
+                        "choice",
+                        message="Choose a column",
+                        choices=tables.columns_name(conn, table_name),
+                    ))
+                db.display_column(conn, table_name, column_name)
+
 
         # Ask a user input before clearing screen and loop
         print("\n\nPress ENTER to continue...")

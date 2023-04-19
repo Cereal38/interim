@@ -63,3 +63,15 @@ def display_table(conn, table_name):
 
     print(tabulate.tabulate(rows, tables.columns_name(conn, table_name), tablefmt='grid'))
 
+def display_column(conn, table_name, column_name):
+    """
+    Display all items of the asked column
+    """
+    cur = conn.cursor()
+
+    cur.execute(f"SELECT {column_name} FROM {table_name}")
+
+    rows = cur.fetchall()
+
+    print(tabulate.tabulate(rows, [column_name], tablefmt='grid'))
+
