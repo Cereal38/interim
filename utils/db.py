@@ -1,5 +1,5 @@
+
 import sqlite3
-import tabulate
 
 from utils import tables
 
@@ -50,28 +50,4 @@ def mise_a_jour_bd(conn: sqlite3.Connection, file: str):
     # Validation des modifications
     conn.commit()
 
-
-def display_table(conn, table_name):
-    """
-    Display all items of the asked table
-    """
-    cur = conn.cursor()
-
-    cur.execute(f"SELECT * FROM {table_name}")
-
-    rows = cur.fetchall()
-
-    print(tabulate.tabulate(rows, tables.columns_name(conn, table_name), tablefmt='grid'))
-
-def display_column(conn, table_name, column_name):
-    """
-    Display all items of the asked column
-    """
-    cur = conn.cursor()
-
-    cur.execute(f"SELECT {column_name} FROM {table_name}")
-
-    rows = cur.fetchall()
-
-    print(tabulate.tabulate(rows, [column_name], tablefmt='grid'))
 

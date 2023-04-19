@@ -7,6 +7,7 @@ import os
 from utils import db
 from utils import cli
 from utils import tables
+from utils import steps
 
 
 def main():
@@ -24,6 +25,9 @@ def main():
 
     while (True) :
 
+        # Clear the screen
+        os.system('clear')
+
         # Ask the user for the action he wants
         user_choice = cli.selection_menu(inquirer.List(
                 "choice",
@@ -33,41 +37,18 @@ def main():
 
 
         if (user_choice == "EXIT") :
-            print("Thank for using our program !")
+            print("Thank you for using our program !")
             return
 
 
         # If user want to display a table, ask for which one
         if (user_choice == "DISPLAY") :
-            table_name = cli.selection_menu(inquirer.List(
-                    "choice",
-                    message="Select a table",
-                    choices=[table for table in tables.tables_name(conn)],
-                ))
-
-            # Ask the user if he wants to display the table or a column
-            user_choice = cli.selection_menu(inquirer.List(
-                    "choice",
-                    message="Do you want to display the full table or only a column ?",
-                    choices=["FULL TABLE", "ONLY A COLUMN"],
-                ))
-
-            if (user_choice == "FULL TABLE") :
-                db.display_table(conn, table_name)
-
-            if (user_choice == "ONLY A COLUMN") :
-                column_name = cli.selection_menu(inquirer.List(
-                        "choice",
-                        message="Choose a column",
-                        choices=tables.columns_name(conn, table_name),
-                    ))
-                db.display_column(conn, table_name, column_name)
+            steps.display(conn)
 
 
-        # Ask a user input before clearing screen and loop
+        # Ask a user input before looping
         print("\n\nPress ENTER to continue...")
         input()
-        os.system('clear')
 
 
 if __name__ == "__main__":
