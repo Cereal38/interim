@@ -55,3 +55,19 @@ def reset (conn) :
         db.mise_a_jour_bd(conn, "data/creation.sql")
         db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
+
+def free (conn) :
+    """
+    Allow the user to write the command of his choice in an editor
+    """
+    text = inquirer.prompt([inquirer.Editor('text', message="Write the command in your editor")])
+
+    # Remove \n
+    request = text['text'].strip()
+
+    # Execute request
+    cur = conn.cursor()
+    cur.execute(request)
+
+    # Apply changes
+    conn.commit()

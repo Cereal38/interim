@@ -31,7 +31,7 @@ def main():
         user_choice = cli.selection_menu(inquirer.List(
                 "choice",
                 message="Choose an action",
-                choices=["DISPLAY", "INSERT", "DELETE", "UPDATE", "RESET", "EXIT"],
+                choices=["DISPLAY", "FREE", "INSERT", "DELETE", "UPDATE", "RESET", "EXIT"],
             ))
 
 
@@ -51,6 +51,9 @@ def main():
         
         if (user_choice == "RESET") :
             steps.reset(conn)
+
+        if (user_choice == "FREE") :
+            steps.free(conn)
 
 
         # Ask a user input before looping
