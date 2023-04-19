@@ -33,7 +33,7 @@ def select_table (conn) :
             choices=[table for table in tables.tables_name(conn)],
         ))
 
-def select_column (conn, table_name) :
+def select_column (conn: sqlite3.Connection, table_name: str) :
     """
     Ask the user to choose a column in the given table and return the name
     """
@@ -41,6 +41,22 @@ def select_column (conn, table_name) :
             "choice",
             message="Choose a column",
             choices=tables.columns_name(conn, table_name),
+        ))
+
+
+def select_row (conn: sqlite3.Connection, table_name: str) :
+    """
+    Ask the user to choose a row in the given table and return it
+    """
+    # Get all rows
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM {table_name}")
+    rows = cur.fetchall()
+
+    return selection_menu(inquirer.List(
+            "choice",
+            message="Choose a column",
+            choices=[[col for col in row] for row in rows],
         ))
 
 

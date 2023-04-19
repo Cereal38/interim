@@ -1,6 +1,7 @@
 
 import inquirer
 import re
+import sqlite3
 
 from utils import cli
 from utils import tables
@@ -67,7 +68,7 @@ def insert (conn) :
     db.insert_in_db (conn, table_name, [values[key] for key in values.keys()])
 
 
-def delete (conn) :
+def delete (conn: sqlite3.Connection) :
     """
     Allow user to delete rows from a table
     """
@@ -87,6 +88,24 @@ def delete (conn) :
         ))
 
     db.delete_rows(conn, table_name, user_choices)
+
+
+def update (conn: sqlite3.Connection) :
+    """
+    Allow user to update a row from the table
+    """
+
+    # Select a table, a row and a column
+    table_name = cli.select_table(conn)
+    row = cli.select_row(conn, table_name)
+    column_name = cli.select_column(conn, table_name)
+
+    # Ask the user to give the new value of the field
+    value = inquirer.prompt([
+                                  inquirer.Text(column_name, message=f"Give {column_name} a new value" )
+                              ])
+
+    db.update_row(conn, table_name, row, value)
 
 
 def reset (conn) :

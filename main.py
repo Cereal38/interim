@@ -51,6 +51,9 @@ def main():
             if (user_choice == "DELETE") :
                 steps.delete(conn)
 
+            if (user_choice == "UPDATE") :
+                steps.update(conn)
+
             
             if (user_choice == "RESET") :
                 steps.reset(conn)

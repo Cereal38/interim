@@ -108,7 +108,7 @@ def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
         request = "DELETE FROM " + table_name + " WHERE ("
         for i in range (len(row)) :
             request += headers[i] + " = "
-            request += "\"" + str(row[i]) + "\""
+            request += "\'" + str(row[i]) + "\'"
             if (i < len(headers)-1) :
                 request += " AND "
         request += ")"
@@ -118,4 +118,37 @@ def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
         cur.execute(request)
 
     # Apply changes
+    conn.commit()
+
+
+def update_row (conn: sqlite3.Connection, table_name: str, row: List[List], value: str) :
+    """
+    UDPATE a row in DB
+    """
+
+    cur = conn.cursor()
+
+    print(table_name)
+    print(row)
+    print(value)
+    print(list(value.keys()))
+    
+    # Get columns name of table
+    headers = tables.columns_name(conn, table_name)
+
+    # Build the request
+    request = "UPDATE " + table_name
+    request += " SET " + list(value.keys())[0] + " = \'" + str(value[list(value.keys())[0]]) + "\'"
+    request += " WHERE ("
+    for i in range (len(row)) :
+        request += headers[i] + " = "
+        request += "\"" + str(row[i]) + "\""
+        if (i < len(headers)-1) :
+            request += " AND "
+    request += ")"
+
+    # Display the request and execute it
+    print()
+    cli.display_success(request)
+    cur.execute(request)
     conn.commit()
