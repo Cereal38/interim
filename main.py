@@ -20,6 +20,7 @@ def main():
     if (db.db_is_empty(conn)) :
 
         db.mise_a_jour_bd(conn, "data/creation.sql")
+        # db.mise_a_jour_bd(conn, "data/triggers.sql")
         db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
     while (True) :

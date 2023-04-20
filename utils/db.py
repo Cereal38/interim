@@ -101,6 +101,10 @@ def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
     DELETE rows in DB
     """
 
+    # Return if the list of rows to delete is empty
+    if (len(rows) == 0) :
+        return
+
     cur = conn.cursor()
 
     # Get columns name of table
@@ -123,10 +127,10 @@ def delete_rows (conn: sqlite3.Connection, table_name: str, rows: List[List]) :
         # Execute request and display it on success
         all_requests += request + "\n"
         cur.execute(request)
+        cli.display_success(request)
 
     # Apply changes
     conn.commit()
-    cli.display_success(request)
 
 
 def update_row (conn: sqlite3.Connection, table_name: str, row: List[List], value: str) :
