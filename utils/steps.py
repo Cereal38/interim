@@ -52,6 +52,26 @@ def free (conn) :
     conn.commit()
 
 
+def views (conn) :
+    """
+    Allow the user to write the command of his choice in an editor
+    """
+
+    request = "SELECT * FROM list_diplomes"
+
+    # Execute request
+    cur = conn.cursor()
+
+    cur.execute(request)
+    print(cur.fetchall())
+
+    print()
+    cli.display_success(request)
+
+    # Apply changes
+    conn.commit()
+
+
 def insert (conn) :
     """
     Ask the user to insert a row in the table of his choice
@@ -114,7 +134,7 @@ def reset (conn) :
     """
     if (cli.ask_confirmation(conn, "Are you sure to reset the database ?")) :
         db.mise_a_jour_bd(conn, "data/creation.sql")
-        # db.mise_a_jour_bd(conn, "data/triggers.sql")
+        db.mise_a_jour_bd(conn, "data/views.sql")
         db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
 
