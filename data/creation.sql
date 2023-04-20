@@ -34,8 +34,6 @@ CREATE TABLE Clients (
     telephone_client TEXT NOT NULL,
     email_client TEXT NOT NULL,
     CONSTRAINT ck_clients_id_client CHECK (id_client >= 0)
-
-    -- Regex for email and phone are implemented in the application
 );
 
 CREATE TABLE Employes (
@@ -45,8 +43,6 @@ CREATE TABLE Employes (
     telephone_employe TEXT NOT NULL,
     email_employe TEXT NOT NULL,
     CONSTRAINT ck_employe_id_employe CHECK (id_employe >= 0)
-
-    -- Regex for email and phone are implemented in the application
 );
 
 CREATE TABLE Contrats (

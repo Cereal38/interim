@@ -32,6 +32,7 @@ AS
   JOIN Contrats USING (id_mission)
   GROUP BY id_mission
   UNION
+  -- Add client who does not have any missions / any contract for their missions
   SELECT id_client, nom_client, 0 AS count_employes
   FROM Clients
   WHERE (id_client NOT IN (

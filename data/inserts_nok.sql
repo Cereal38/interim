@@ -1,28 +1,23 @@
 -- Jeux de données NOK (ne doit pas marcher àprès avoir éxécuté le jeux de données NOK)
 
 -- Erreur : Modèle existant
-INSERT INTO Modeles VALUES ('Pirate', 10);
--- Erreur : Longueur négative
-INSERT INTO Modeles VALUES ('Voilier', -3);
+INSERT INTO Diplomes VALUES ('BREVET', 1);
+-- Erreur : Valeur négative
+INSERT INTO Diplomes VALUES ('BAC ES', -3);
 
--- Erreur : Type emplacement autre que "petit", "moyen" ou "grand"
-INSERT INTO TypesEmplacements VALUES ('très petit', 2, 2000);
+-- Erreur : status_mission autre que "en_attente", "annule", "en_cours", "termine"
+INSERT INTO Missions Values (120, '2023-01-11', '2023-12-29', 'random_status', 3, 2, 'Cadre');
 
--- Erreur : Emplacement avec type inconnu
-INSERT INTO Emplacements VALUES (1000, 'cetypenexistepas');
+-- Erreur : Employe avec certification inconnu
+INSERT INTO Certifications VALUES (3, 'BAC STMG');
 
--- Erreur : Bateau avec numéro existant
-INSERT INTO Bateaux VALUES (1, '1111-01-01', 'Pirate',1001);
--- Erreur : Bateau sans modèle
-INSERT INTO Bateaux VALUES (12, '1222-02-02', NULL,1002);
--- Erreur : Bateau sans emplacement
-INSERT INTO Bateaux VALUES (13, '1333-03-03', 'Pirate', NULL);
--- Erreur : Bateau de modèle inconnu
-INSERT INTO Bateaux VALUES (14, '1444-04-04', 'ModeleInventé',1004);
--- Erreur : Bateau dans emplacement inconnu
-INSERT INTO Bateaux VALUES (15, '1555-05-05', 'Pirate',1015);
--- Erreur : Bateau dans emplacement déjà occupé
-INSERT INTO Bateaux VALUES (16, '1666-06-06', 'Pirate',1006);
+-- Erreur : Mission avec client inconnu 
+INSERT INTO Missions Values (36, '2024-01-02', '2024-06-30', 'en_attente', 2, 21, 'Secrétaire');
+-- Erreur : Missions sans type
+INSERT INTO Missions Values (36, '2024-01-02', '2024-06-30', 'en_attente', 2, 21, NULL);
+
+-- Erreur : Contrat déjà existant
+INSERT INTO Contrats Values (0, 0);
 
 -- Erreur : Adhérent avec numéro existant
 INSERT INTO Adherents VALUES (10, 'Erroné', 'Erroné', '2020-02-02');
