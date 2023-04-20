@@ -55,7 +55,7 @@ def free (conn) :
 
 def views (conn: sqlite3.Connection) :
     """
-    Allow the user to display the result of an existing request
+    Allow the user to display the result of an existing request (Created in data/views.sql)
     """
 
     cur = conn.cursor()
@@ -66,13 +66,46 @@ def views (conn: sqlite3.Connection) :
     user_choice = cli.selection_menu(inquirer.List(
             "choice",
             message="Choose a request to execute",
-            choices=["EMPLOYES WITHOUT MISSION"],
+            choices=[
+                "EMPLOYES WITHOUT MISSION",
+                "PENDING MISSIONS",
+                "COUNT EMPLOYES OF EACH CLIENT",
+                ],
         ))
 
     if (user_choice == "EMPLOYES WITHOUT MISSION") :
 
         request = "SELECT * FROM list_users_without_mission"
-        columns = ['id', 'nom_employe', 'prenom_employe']
+        columns = ["id_employe", "nom_employe", "prenom_employe"]
+
+        # Execute request
+        cur.execute(request)
+        rows = cur.fetchall()
+
+    if (user_choice == "PENDING MISSIONS") :
+
+        request = "SELECT * FROM list_pending_missions"
+        columns = [
+                "id_mission",
+                "date_debut_mission",
+                "date_fin_mission",
+                "type_mission",
+                "salaire_type_mission",
+                "diplome_type_mission"
+                ]
+
+    if (user_choice == "COUNT EMPLOYES OF EACH CLIENT") :
+
+        request = "SELECT * FROM employes_number_of_each_client"
+        columns = [
+                "id_client",
+                "nom_client",
+                "count_employes",
+                ]
+
+        # Execute request
+        cur.execute(request)
+        rows = cur.fetchall()
 
         # Execute request
         cur.execute(request)

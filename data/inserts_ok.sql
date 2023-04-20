@@ -84,11 +84,11 @@ INSERT INTO Certifications VALUES (4, 'BTS MARKETING');
 -- INSERT INTO Certifications VALUES (12, 'CAP');
 -- INSERT INTO Certifications VALUES (14, 'BREVET');
 
-INSERT INTO Missions Values (0, '2023-01-16', '2024-06-03', 'en_cours', 1, 0, 'Caissier');
+INSERT INTO Missions Values (0, '2023-01-16', '2024-06-03', 'annule', 1, 0, 'Caissier');
 INSERT INTO Missions Values (1, '2022-05-14', '2022-09-30', 'termine', 5, 1, 'Réceptionniste');
-INSERT INTO Missions Values (2, '2021-10-14', '2021-12-31', 'en_cours', 3, 2, 'Cadre');
-INSERT INTO Missions Values (3, '2021-03-14', '2021-06-30', 'en_attente', 2, 9, 'Secrétaire');
-INSERT INTO Missions Values (4, '2020-09-14', '2020-11-30', 'termine', 6, 14, 'Caissier');
+INSERT INTO Missions Values (2, '2023-01-11', '2023-12-29', 'en_cours', 3, 2, 'Cadre');
+INSERT INTO Missions Values (3, '2024-01-02', '2024-06-30', 'en_attente', 2, 9, 'Secrétaire');
+INSERT INTO Missions Values (4, '2023-12-14', '2024-11-30', 'en_attente', 6, 14, 'Caissier');
 -- INSERT INTO Missions Values (5, '2020-04-14', '2020-07-30', 'annule', 4, 5, 'Développeur web');
 -- INSERT INTO Missions Values (6, '2021-06-14', '2021-08-30', 'en_cours', 6, 6, 'Stagiaire');
 -- INSERT INTO Missions Values (7, '2021-08-14', '2021-10-30', 'en_attente', 5, 7, 'Manager');

@@ -59,10 +59,10 @@ CREATE TABLE Contrats (
 
 CREATE TABLE TypesMissions (
     nom_types_mission TEXT PRIMARY KEY,
-    salaire_types_mission REAL NOT NULL,
-    diplome_types_mission TEXT NOT NULL,
-    CONSTRAINT fk_types_missions_diplome_types_mission FOREIGN KEY (diplome_types_mission) REFERENCES Diplomes (nom_diplome),
-    CONSTRAINT ck_type_missions_salaire_type_mission CHECK (salaire_types_mission >= 0)
+    salaire_type_mission REAL NOT NULL,
+    diplome_type_mission TEXT NOT NULL,
+    CONSTRAINT fk_types_missions_diplome_types_mission FOREIGN KEY (diplome_type_mission) REFERENCES Diplomes (nom_diplome),
+    CONSTRAINT ck_type_missions_salaire_type_mission CHECK (salaire_type_mission >= 0)
 );
 
 CREATE TABLE Diplomes (
