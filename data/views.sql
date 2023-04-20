@@ -1,10 +1,12 @@
 
--- CREATE TRIGGER test_trigger AFTER DELETE ON Employes
--- BEGIN
---     INSERT INTO Diplomes VALUES ('DELETED', '1');
--- END;
 
-CREATE VIEW IF NOT EXISTS list_diplomes
+-- Return employes who does not have a mission
+DROP VIEW IF EXISTS list_users_without_mission;
+CREATE VIEW list_users_without_mission
 AS
-  SELECT nom_diplome
-  FROM Diplomes;
+  SELECT id_employe, nom_employe, prenom_employe
+  FROM Employes
+  WHERE (id_employe NOT IN (
+    SELECT id_employe
+    FROM Contrats
+  ));

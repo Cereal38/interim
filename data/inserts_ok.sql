@@ -103,7 +103,7 @@ INSERT INTO Contrats Values (0, 0);
 INSERT INTO Contrats Values (1, 2);
 INSERT INTO Contrats Values (1, 3);
 INSERT INTO Contrats Values (3, 4);
-INSERT INTO Contrats Values (4, 1);
+-- INSERT INTO Contrats Values (4, 1);
 -- INSERT INTO Contrats Values (4, 4);
 -- INSERT INTO Contrats Values (4, 7);
 -- INSERT INTO Contrats Values (5, 6);

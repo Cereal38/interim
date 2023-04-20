@@ -2,6 +2,7 @@
 import inquirer
 import re
 import sqlite3
+import tabulate
 
 from utils import cli
 from utils import tables
@@ -52,27 +53,36 @@ def free (conn) :
     conn.commit()
 
 
-def views (conn) :
+def views (conn: sqlite3.Connection) :
     """
-    Allow the user to write the command of his choice in an editor
+    Allow the user to display the result of an existing request
     """
 
-    request = "SELECT * FROM list_diplomes"
-
-    # Execute request
     cur = conn.cursor()
+    request = ''
+    columns = []
+    rows = []
+    
+    user_choice = cli.selection_menu(inquirer.List(
+            "choice",
+            message="Choose a request to execute",
+            choices=["EMPLOYES WITHOUT MISSION"],
+        ))
 
-    cur.execute(request)
-    print(cur.fetchall())
+    if (user_choice == "EMPLOYES WITHOUT MISSION") :
 
-    print()
-    cli.display_success(request)
+        request = "SELECT * FROM list_users_without_mission"
+        columns = ['id', 'nom_employe', 'prenom_employe']
 
-    # Apply changes
-    conn.commit()
+        # Execute request
+        cur.execute(request)
+        rows = cur.fetchall()
+
+    # Display result
+    print(tabulate.tabulate(rows, columns, tablefmt='grid'))
 
 
-def insert (conn) :
+def insert (conn: sqlite3.Connection) :
     """
     Ask the user to insert a row in the table of his choice
     """
