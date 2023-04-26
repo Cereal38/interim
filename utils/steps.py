@@ -178,6 +178,7 @@ def reset (conn) :
     if (cli.ask_confirmation(conn, "Are you sure to reset the database ?")) :
         db.mise_a_jour_bd(conn, "data/creation.sql")
         db.mise_a_jour_bd(conn, "data/views.sql")
+        db.mise_a_jour_bd(conn, "data/triggers.sql")
         db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
 

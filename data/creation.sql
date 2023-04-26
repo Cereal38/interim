@@ -43,6 +43,8 @@ CREATE TABLE Employes (
     telephone_employe TEXT NOT NULL,
     email_employe TEXT NOT NULL,
     CONSTRAINT ck_employe_id_employe CHECK (id_employe >= 0)
+    CONSTRAINT ck_employe_email_regex CHECK (email_employe LIKE '%@%.%')
+    CONSTRAINT ck_employe_telephone_regex CHECK (telephone_employe REGEXP '^[0-9]{10}$')
 );
 
 CREATE TABLE Contrats (

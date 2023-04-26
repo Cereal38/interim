@@ -1,9 +1,15 @@
 
 import sqlite3
+import re
 from typing import List
 
 from utils import tables
 from utils import cli
+
+
+def regexp(expr, item) :
+    reg = re.compile(expr)
+    return reg.search(item) is not None
 
 
 def creer_connexion(db_file):
@@ -17,6 +23,8 @@ def creer_connexion(db_file):
         conn = sqlite3.connect(db_file)
         # On active les foreign keys
         conn.execute("PRAGMA foreign_keys = 1")
+        # Add regexp fonction
+        conn.create_function('REGEXP', 2, regexp)
         return conn
     except sqlite3.Error as e:
         print(e)
