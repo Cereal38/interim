@@ -1,11 +1,14 @@
 -- Jeux de données OK (ça doit marcher)
 
-INSERT INTO Diplomes VALUES ('Licence IMA', 3);
-INSERT INTO Diplomes VALUES ('Licence STAPS', 3);
-INSERT INTO Diplomes VALUES ('BAC S', 3);
-INSERT INTO Diplomes VALUES ('BREVET', 1);
-INSERT INTO Diplomes VALUES ('MASTER WEB', 5);
-INSERT INTO Diplomes VALUES ('BTS MARKETING', 2);
+-- ATTENTION : On insert les entiers / rééls (autres que les PK) comme des chaînes de caractères pour
+-- pouvoir les véifier avec les regexs inscrites dans les CHECKs à la création
+
+INSERT INTO Diplomes VALUES ('Licence IMA', '3');
+INSERT INTO Diplomes VALUES ('Licence STAPS', '3');
+INSERT INTO Diplomes VALUES ('BAC S', '3');
+INSERT INTO Diplomes VALUES ('BREVET', '1');
+INSERT INTO Diplomes VALUES ('MASTER WEB', '5');
+INSERT INTO Diplomes VALUES ('BTS MARKETING', '2');
 -- INSERT INTO Diplomes VALUES ('BAC L', 3);
 -- INSERT INTO Diplomes VALUES ('MASTER MARKETING', 5);
 -- INSERT INTO Diplomes VALUES ('BTS WEB', 2);
@@ -34,11 +37,11 @@ INSERT INTO Clients VALUES (14, 'Bouygues', '0453345678', 'contact@bouygues.com'
 -- INSERT INTO Clients VALUES (12, 'SFR', '0433345678', 'contact@sfr.fr');
 -- INSERT INTO Clients VALUES (13, 'Free', '0443345678', 'contact@free.fr');
 
-INSERT INTO TypesMissions VALUES ('Caissier', 1200, 'BREVET');
-INSERT INTO TypesMissions VALUES ('Réceptionniste', 1500, 'BAC S');
-INSERT INTO TypesMissions VALUES ('Cadre', 3500, 'MASTER WEB');
-INSERT INTO TypesMissions VALUES ('Secrétaire', 2000, 'BTS MARKETING');
-INSERT INTO TypesMissions VALUES ('Coach', 2000, 'Licence STAPS');
+INSERT INTO TypesMissions VALUES ('Caissier', '1200.63', 'BREVET');
+INSERT INTO TypesMissions VALUES ('Réceptionniste', '1500.94', 'BAC S');
+INSERT INTO TypesMissions VALUES ('Cadre', '3500', 'MASTER WEB');
+INSERT INTO TypesMissions VALUES ('Secrétaire', '2000', 'BTS MARKETING');
+INSERT INTO TypesMissions VALUES ('Coach', '2000', 'Licence STAPS');
 -- INSERT INTO TypesMissions VALUES ('Gestionnaire', 2500, 'DEUG');
 -- INSERT INTO TypesMissions VALUES ('Développeur web', 4000, 'MASTER INFORMATIQUE');
 -- INSERT INTO TypesMissions VALUES ('Stagiaire', 1000, 'BREVET');
@@ -84,11 +87,11 @@ INSERT INTO Certifications VALUES (4, 'BTS MARKETING');
 -- INSERT INTO Certifications VALUES (12, 'CAP');
 -- INSERT INTO Certifications VALUES (14, 'BREVET');
 
-INSERT INTO Missions Values (0, '2023-01-16', '2024-06-03', 'annule', 1, 0, 'Caissier');
-INSERT INTO Missions Values (1, '2022-05-14', '2022-09-30', 'termine', 5, 1, 'Réceptionniste');
-INSERT INTO Missions Values (2, '2023-01-11', '2023-12-29', 'en_cours', 3, 2, 'Cadre');
-INSERT INTO Missions Values (3, '2024-01-02', '2024-06-30', 'en_attente', 2, 9, 'Secrétaire');
-INSERT INTO Missions Values (4, '2023-12-14', '2024-11-30', 'en_attente', 6, 14, 'Caissier');
+INSERT INTO Missions Values (0, '2023-01-16', '2024-06-03', 'annule', '1', 0, 'Caissier');
+INSERT INTO Missions Values (1, '2022-05-14', '2022-09-30', 'termine', '5', 1, 'Réceptionniste');
+INSERT INTO Missions Values (2, '2023-01-11', '2023-12-29', 'en_cours', '3', 2, 'Cadre');
+INSERT INTO Missions Values (3, '2024-01-02', '2024-06-30', 'en_attente', '2', 9, 'Secrétaire');
+INSERT INTO Missions Values (4, '2023-12-14', '2024-11-30', 'en_attente', '6', 14, 'Caissier');
 -- INSERT INTO Missions Values (5, '2020-04-14', '2020-07-30', 'annule', 4, 5, 'Développeur web');
 -- INSERT INTO Missions Values (6, '2021-06-14', '2021-08-30', 'en_cours', 6, 6, 'Stagiaire');
 -- INSERT INTO Missions Values (7, '2021-08-14', '2021-10-30', 'en_attente', 5, 7, 'Manager');
