@@ -34,6 +34,8 @@ CREATE TABLE Clients (
     telephone_client TEXT NOT NULL,
     email_client TEXT NOT NULL,
     CONSTRAINT ck_clients_id_client CHECK (id_client >= 0)
+    CONSTRAINT ck_clients_email_regex CHECK (email_client LIKE '%@%.%')
+    CONSTRAINT ck_clients_telephone_regex CHECK (telephone_client REGEXP '^[0-9]{10}$')
 );
 
 CREATE TABLE Employes (
