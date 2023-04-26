@@ -14,9 +14,9 @@ CREATE TABLE Missions (
     date_fin_mission DATE NOT NULL,
     statut_mission TEXT NOT NULL,
     nb_postes_mission INTEGER NOT NULL,
-    id_client_mission INTEGER NOT NULL,
+    id_client INTEGER NOT NULL,
     type_mission TEXT NOT NULL,
-    CONSTRAINT fk_missions_id_client_mission FOREIGN KEY (id_client_mission) REFERENCES Clients (id_client),
+    CONSTRAINT fk_missions_id_client FOREIGN KEY (id_client) REFERENCES Clients (id_client),
     CONSTRAINT fk_missions_type_mission FOREIGN KEY (type_mission) REFERENCES TypesMissions (nom_types_mission),
     CONSTRAINT ck_missions_id_missions CHECK (id_mission >= 0),
     CONSTRAINT ck_missions_dates CHECK (date_debut_mission <= date_fin_mission),
@@ -27,7 +27,7 @@ CREATE TABLE Missions (
       statut_mission = 'annule'),
     CONSTRAINT ck_missions_date_debut_mission_regex CHECK (date_debut_mission REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'),
     CONSTRAINT ck_missions_date_fin_mission_regex CHECK (date_fin_mission REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'),
-    CONSTRAINT ck_missions_nb_posts_mission_regex CHECK (nb_postes_mission REGEXP '^[0-9]+$')
+    CONSTRAINT ck_missions_nb_postes_mission_regex CHECK (nb_postes_mission REGEXP '^[0-9]+$')
 );
 
 CREATE TABLE Clients (
