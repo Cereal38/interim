@@ -20,6 +20,7 @@ def main():
     if (db.db_is_empty(conn)) :
 
         db.mise_a_jour_bd(conn, "data/creation.sql")
+        db.mise_a_jour_bd(conn, "data/views.sql")
         db.mise_a_jour_bd(conn, "data/inserts_ok.sql")
 
     while (True) :
@@ -31,7 +32,7 @@ def main():
         user_choice = cli.selection_menu(inquirer.List(
                 "choice",
                 message="Choose an action",
-                choices=["DISPLAY", "FREE", "INSERT", "DELETE", "UPDATE", "RESET", "EXIT"],
+                choices=["DISPLAY", "FREE", "VIEWS", "INSERT", "DELETE", "UPDATE", "RESET", "EXIT"],
             ))
 
 
@@ -43,6 +44,8 @@ def main():
             if (user_choice == "FREE") :
                 steps.free(conn)
 
+            if (user_choice == "VIEWS") :
+                steps.views(conn)
 
             if (user_choice == "INSERT") :
                 steps.insert(conn)
