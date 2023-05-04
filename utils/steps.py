@@ -9,7 +9,7 @@ from utils import tables
 from utils import db
 
 
-def display (conn) :
+def display(conn: sqlite3.Connection):
     """
     Dislay a table or a column (depend on user choices)
     """
@@ -24,16 +24,74 @@ def display (conn) :
             choices=["FULL TABLE", "ONLY A COLUMN"],
         ))
 
-    if (user_choice == "FULL TABLE") :
+    if (user_choice == "FULL TABLE"):
         cli.display_table(conn, table_name)
 
-    if (user_choice == "ONLY A COLUMN") :
+    if (user_choice == "ONLY A COLUMN"):
         # User select a column
         column_name = cli.select_column(conn, table_name)
         cli.display_column(conn, table_name, column_name)
 
+
+def customized_commands(conn: sqlite3.Connection):
+    """
+    Allow the user to execute a customized command
+    """
+
+    cur = conn.cursor()
+    request = ''
+
+    # Ask the user to fill all fields
+    user_choice = cli.selection_menu(inquirer.List(
+            "choice",
+            message="Choose a request",
+            choices=[
+                "GET SALARY OF AN EMPLOYE",
+                "GET NUMBER OF EMPLOYES OF A CLIENT",
+                ],
+        ))
+
+    if (user_choice == "GET SALARY OF AN EMPLOYE"):
         
-def free (conn) :
+        value = inquirer.prompt([
+                                  inquirer.Text('id_employe', message=f"Give the id of the employe" )
+                              ])
+
+        request = f"""
+          SELECT id_employe, SUM(salaire_type_mission) as salaire_employe
+          FROM Employes JOIN Contrats USING (id_employe)
+                        JOIN Missions USING (id_mission)
+                        JOIN TypesMissions ON (Missions.type_mission = TypesMissions.nom_types_mission)
+          GROUP BY (id_employe)
+          HAVING (id_employe = {value['id_employe']});
+        """
+        columns = ["id_employe", "salaire_employe"]
+
+        # Execute request
+        cur.execute(request)
+        rows = cur.fetchall()
+    
+    if (user_choice == "GET NUMBER OF EMPLOYES OF A CLIENT") :
+          
+          value = inquirer.prompt([
+                                    inquirer.Text('id_client', message=f"Give the id of the client" )
+                                ])
+  
+          request = f"""
+            SELECT id_client, count_employes
+            FROM employes_number_of_each_client
+            WHERE (id_client = {value['id_client']});
+          """
+          columns = ["id_client", "nb_employes"]
+  
+          # Execute request
+          cur.execute(request)
+          rows = cur.fetchall()
+    
+    print(tabulate.tabulate(rows, columns, tablefmt='grid'))
+
+        
+def free (conn: sqlite3.Connection) :
     """
     Allow the user to write the command of his choice in an editor
     """
@@ -91,8 +149,12 @@ def views (conn: sqlite3.Connection) :
                 "date_fin_mission",
                 "type_mission",
                 "salaire_type_mission",
-                "diplome_type_mission"
+                "diplome_type_mission",
                 ]
+
+        # Execute request
+        cur.execute(request)
+        rows = cur.fetchall()
 
     if (user_choice == "COUNT EMPLOYES OF EACH CLIENT") :
 
@@ -103,9 +165,6 @@ def views (conn: sqlite3.Connection) :
                 "count_employes",
                 ]
 
-        # Execute request
-        cur.execute(request)
-        rows = cur.fetchall()
 
         # Execute request
         cur.execute(request)

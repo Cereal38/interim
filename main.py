@@ -32,7 +32,7 @@ def main():
         user_choice = cli.selection_menu(inquirer.List(
                 "choice",
                 message="Choose an action",
-                choices=["DISPLAY", "FREE", "VIEWS", "INSERT", "DELETE", "UPDATE", "RESET", "EXIT"],
+                choices=["DISPLAY", "CUSTOMIZED COMMANDS", "FREE", "VIEWS", "INSERT", "DELETE", "UPDATE", "RESET", "EXIT"],
             ))
 
 
@@ -40,6 +40,8 @@ def main():
             if (user_choice == "DISPLAY") :
                 steps.display(conn)
 
+            if (user_choice == "CUSTOMIZED COMMANDS") :
+                steps.customized_commands(conn)
 
             if (user_choice == "FREE") :
                 steps.free(conn)
