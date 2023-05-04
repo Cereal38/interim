@@ -47,8 +47,7 @@ def customized_commands(conn: sqlite3.Connection):
             message="Choose a request",
             choices=[
                 "GET SALARY OF AN EMPLOYE",
-                "GET ALL MISSION OF A CLIENT",
-                "GET ALL DIPLOMAS OF AN EMPLOYE",
+                "GET NUMBER OF EMPLOYES OF A CLIENT",
                 ],
         ))
 
@@ -72,8 +71,22 @@ def customized_commands(conn: sqlite3.Connection):
         cur.execute(request)
         rows = cur.fetchall()
     
-    if (user_choice == "GET ALL MISSION OF A CLIENT") :
-        pass
+    if (user_choice == "GET NUMBER OF EMPLOYES OF A CLIENT") :
+          
+          value = inquirer.prompt([
+                                    inquirer.Text('id_client', message=f"Give the id of the client" )
+                                ])
+  
+          request = f"""
+            SELECT id_client, count_employes
+            FROM employes_number_of_each_client
+            WHERE (id_client = {value['id_client']});
+          """
+          columns = ["id_client", "nb_employes"]
+  
+          # Execute request
+          cur.execute(request)
+          rows = cur.fetchall()
     
     print(tabulate.tabulate(rows, columns, tablefmt='grid'))
 
@@ -142,7 +155,7 @@ def views (conn: sqlite3.Connection) :
         # Execute request
         cur.execute(request)
         rows = cur.fetchall()
-        
+
     if (user_choice == "COUNT EMPLOYES OF EACH CLIENT") :
 
         request = "SELECT * FROM employes_number_of_each_client"
