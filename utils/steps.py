@@ -75,9 +75,6 @@ def customized_commands(conn: sqlite3.Connection):
     if (user_choice == "GET ALL MISSION OF A CLIENT") :
         pass
     
-    if (user_choice == "GET ALL DIPLOMAS OF AN EMPLOYE") :
-        pass
-    
     print(tabulate.tabulate(rows, columns, tablefmt='grid'))
 
         
@@ -139,9 +136,13 @@ def views (conn: sqlite3.Connection) :
                 "date_fin_mission",
                 "type_mission",
                 "salaire_type_mission",
-                "diplome_type_mission"
+                "diplome_type_mission",
                 ]
 
+        # Execute request
+        cur.execute(request)
+        rows = cur.fetchall()
+        
     if (user_choice == "COUNT EMPLOYES OF EACH CLIENT") :
 
         request = "SELECT * FROM employes_number_of_each_client"
@@ -151,9 +152,6 @@ def views (conn: sqlite3.Connection) :
                 "count_employes",
                 ]
 
-        # Execute request
-        cur.execute(request)
-        rows = cur.fetchall()
 
         # Execute request
         cur.execute(request)
